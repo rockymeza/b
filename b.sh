@@ -68,7 +68,11 @@ __b_cd()
   __b_find_mark $1
   if [[ -n "$mark" ]]; then
     dir=$(echo $mark | sed 's/^[^,]*,\(.*\)/\1/')
-    cd $dir
+    if [ ! -t 1 ] ; then
+      echo -n "$dir"
+    else
+      cd $dir
+    fi
   else
     echo "That bookmark does not exist." >&2
   fi
