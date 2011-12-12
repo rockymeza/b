@@ -20,3 +20,5 @@ bookmark and directory, it will create that bookmark.
       ...
     $ b home
       will cd to the home directory
+    $ echo `b home`
+      /home/user

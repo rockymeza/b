@@ -25,6 +25,8 @@ Examples:
       ...
     $ b home
       will cd to the home directory
+    $ echo `b home`
+      /home/user
 HEREDOC
 
 ## private
@@ -32,8 +34,12 @@ HEREDOC
 # Creates the bookmark database if it doesn't exist.
 __b_init()
 {
-  if [[ ! -f "$BOOKMARKS_FILE" ]]; then
-    touch "$BOOKMARKS_FILE"
+  if [[ ! -f "$BOOKMARKS_FILE" ]]; then  echo "Linking ~/.${1}..."
+  ln -s ${PWD}/${1} ${HOME}/.${1}
+
+    touo "Linking ~/.${1}..."
+      ln -s ${PWD}/${1} ${HOME}/.${1}
+      h "$BOOKMARKS_FILE"
   fi
 }
 
@@ -68,6 +74,7 @@ __b_cd()
   __b_find_mark $1
   if [[ -n "$mark" ]]; then
     dir=$(echo $mark | sed 's/^[^,]*,\(.*\)/\1/')
+    # if not a tty, print to stdout
     if [ ! -t 1 ] ; then
       echo -n "$dir"
     else
