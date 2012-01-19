@@ -18,7 +18,7 @@ Notes:
 
 Examples:
     $ b home /home/user
-      Added home,/home/user to bookmark list    
+      Added home,/home/user to bookmark list
     $ b
       List of bookmarks:
       home,/home/user
@@ -69,16 +69,23 @@ __b_add()
 
 # Will `cd` to the bookmarked directory.  If no bookmark matches the one
 # specified, it will print an error.
+local open_command="$EDITOR"
+if [[ `uname` = "Darwin" ]]; then
+  open_command=open
+fi
+
 __b_cd()
 {
-  __b_find_mark $1
+  __b_find_mark "$1"
   if [[ -n "$mark" ]]; then
     dir=$(echo $mark | sed 's/^[^,]*,\(.*\)/\1/')
     # if not a tty, print to stdout
     if [ ! -t 1 ] ; then
       echo -n "$dir"
+    elif [[ -d $dir ]]; then
+      cd "$dir"
     else
-      cd $dir
+      $open_command "$dir"
     fi
   else
     echo "That bookmark does not exist." >&2
