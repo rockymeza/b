@@ -43,12 +43,8 @@ HEREDOC
 # Creates the bookmark database if it doesn't exist.
 __b_init()
 {
-  if [[ ! -f "$BOOKMARKS_FILE" ]]; then  echo "Linking ~/.${1}..."
-  ln -s ${PWD}/${1} ${HOME}/.${1}
-
-    touo "Linking ~/.${1}..."
-      ln -s ${PWD}/${1} ${HOME}/.${1}
-      h "$BOOKMARKS_FILE"
+  if [[ ! -f "$BOOKMARKS_FILE" ]]; then
+    touch $BOOKMARKS_FILE
   fi
 }
 
