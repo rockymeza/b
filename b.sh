@@ -58,7 +58,7 @@ __b_list()
 __b_add()
 {
   __b_find_mark $1
-  if [[ -n "$mark" ]]; then
+  if [[ -n "$__b_mark" ]]; then
     echo "That bookmark is already in use."
   else
     dir=`readlink -f $2`
@@ -78,8 +78,8 @@ fi
 __b_cd()
 {
   __b_find_mark "$1"
-  if [[ -n "$mark" ]]; then
-    dir=$(echo $mark | sed 's/^[^,]*,\(.*\)/\1/')
+  if [[ -n "$__b_mark" ]]; then
+    dir=$(echo "$__b_mark" | sed 's/^[^,]*,\(.*\)/\1/')
     if [ ! -t 1 ] ; then
       echo -n "$dir"
     elif [[ -d $dir ]]; then
@@ -94,7 +94,7 @@ __b_cd()
 
 __b_find_mark()
 {
-  mark=$(grep "^$1," < $BOOKMARKS_FILE)
+  __b_mark=$(grep "^$1," < $BOOKMARKS_FILE)
 }
 
 ## public
