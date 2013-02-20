@@ -105,8 +105,8 @@ __b_find_mark()
   __b_mark=$(grep "^$1," < $BOOKMARKS_FILE)
   if [[ -z "$__b_mark" ]]; then
     # no mark found - search using fuzzy find
-    # transworm "search" into ".*s.*e.*a.*r.*c.*h.*"
-    local search=".*"
+    # transworm "search" into "s.*e.*a.*r.*c.*h.*"
+    local search=""
     local i
     local len=${#1}
     for ((i=0 ; i<$len ; ++i))
