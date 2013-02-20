@@ -62,7 +62,7 @@ __b_list()
 __b_add()
 {
   __b_find_mark $1
-  if [[ -n "$mark" ]]; then
+  if [[ -n "$__b_mark" ]]; then
     echo "That bookmark is already in use."
   else
     dir=`readlink -f $2`
@@ -82,13 +82,16 @@ fi
 __b_cd()
 {
   __b_find_mark "$1"
-  if [[ -n "$mark" ]]; then
-    dir=$(echo $mark | sed 's/^[^,]*,\(.*\)/\1/')
+  if [[ -n "$__b_mark" ]]; then
+    dir=$(echo "$__b_mark" | sed 's/^[^,]*,\(.*\)/\1/')
     # if not a tty, print to stdout
     if [ ! -t 1 ] ; then
       echo -n "$dir"
     elif [[ -d $dir ]]; then
-      cd "$dir"
+      pushd $dir
+      if [[ -f "$dir/.b_hook" ]]; then
+        source "$dir/.b_hook"
+      fi
     else
       $open_command "$dir"
     fi
@@ -99,7 +102,19 @@ __b_cd()
 
 __b_find_mark()
 {
-  mark=$(grep "^$1," < $BOOKMARKS_FILE)
+  __b_mark=$(grep "^$1," < $BOOKMARKS_FILE)
+  if [[ -z "$__b_mark" ]]; then
+    # no mark found - search using fuzzy find
+    # transworm "search" into "s.*e.*a.*r.*c.*h.*"
+    local search=""
+    local i
+    local len=${#1}
+    for ((i=0 ; i<$len ; ++i))
+    do
+      search="$search${1:$i:1}.*"
+    done
+    __b_mark=$(grep "^$search," < "$BOOKMARKS_FILE" | head -n 1)
+  fi
 }
 
 ## public
