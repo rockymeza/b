@@ -88,7 +88,7 @@ __b_cd()
     if [ ! -t 1 ] ; then
       echo -n "$dir"
     elif [[ -d $dir ]]; then
-      pushd $dir
+      cd $dir
       if [[ -f "$dir/.b_hook" ]]; then
         source "$dir/.b_hook"
       fi
