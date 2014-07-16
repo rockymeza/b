@@ -7,6 +7,6 @@ _b()
 		COMPREPLY=( $(compgen -W "$opts" -- $cur) );
 	fi
         # include directories too, so you can replace cd with b
-	COMPREPLY=($(echo $COMPREPLY $(compgen -A directory "$cur")));
+	COMPREPLY=( ${COMPREPLY[@]} $(compgen -A directory "$cur") );
 }
 complete -F _b b
