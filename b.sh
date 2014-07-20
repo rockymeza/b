@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # b, a simple bookmarking system
 # by Rocky Meza
 
