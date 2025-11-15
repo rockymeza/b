@@ -5,6 +5,20 @@ BOOKMARKS_FILE=$HOME/.b_bookmarks
 read -r -d '' USAGE <<HEREDOC
 b, a simple bookmarking system
 
+Installation:
+      Download or copy and paste b.sh and b_completion.sh
+      to a directory.
+      In your .zshrc or .bashrc file add:
+
+      source /path/to/b.sh
+      source /path/to/b_completion.sh
+
+      Close terminal 
+      or 
+      source .zshrc 
+      or 
+      source .bashrc
+
 Usage:
       b [bookmark] [directory]
       b [bookmark] [file]
